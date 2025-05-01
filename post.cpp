@@ -4,6 +4,7 @@
 #include <vector>
 #include <limits>
 using namespace std;
+string postPosition;
 
 int p(ofstream& indexWrite, string& input) {
      bool writing = true;
@@ -75,8 +76,10 @@ int post(ofstream& indexWrite, string& input) {
 			}
                 }
                 else if (input == "done") {
-                         indexWrite << "		</div>\n";
-			indexWrite << "\n<!-- ENDOFPOST -->" << endl;
+                        indexWrite << "		</div>\n";
+			if(postPosition == "b") {
+	 		indexWrite << "\n<!-- ENDOFPOST -->" << endl;
+			}
                         break;
                 }
 		else {
@@ -110,7 +113,12 @@ int main() {
 
 	cout << "\nTitle: ";
 	cin >> title;
+	
+	while(true) {
+	cout << "Post above or below last post? a/b: ";
+	cin >> postPosition;
 
+	if(postPosition == "b") {
 	while (!index.eof()) {
 		indexLine++;
 		getline(index, indexString);
@@ -120,6 +128,25 @@ int main() {
 		}
 		indexLines.push_back(indexString);
 	}
+	break;
+	}
+	else if(postPosition == "a") {
+	while (!index.eof()) {
+		indexLine++;
+		getline(index, indexString);
+		if (indexString == "<!-- STARTOFPOST -->") {
+			targetLine = indexLine;
+			break;
+		}
+		indexLines.push_back(indexString);
+	}
+	break;
+	}
+	else {
+		cout << "Invalid post position\n";
+	}
+	}
+
 
 	indexLine = 0;
 	while (!index.eof()) {
@@ -133,7 +160,9 @@ int main() {
 	{
 		indexWrite << currentLine << endl;
 	}
-	
+	if (postPosition == "a") {
+	indexWrite << "\n<!-- STARTOFPOST -->";	
+	}
 	indexWrite << "\n		<div id=\"post\">";
 	indexWrite << "\n			<h3>" << title << "</h3>";
 	

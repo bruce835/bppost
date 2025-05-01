@@ -1,0 +1,15 @@
+STUFF
+
+
+<!-- STARTOFPOST -->
+		<div id="post">
+			<h3>test</h3>		</div>
+		<div id="post">
+			<h3>title</h3>		</div>
+
+		<div id="post">
+			<h3>botpost</h3>		</div>
+
+<!-- ENDOFPOST -->
+
+
